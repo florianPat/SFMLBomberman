@@ -1,0 +1,90 @@
+
+player.png
+size: 1024,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+playerBackIdel
+  rotate: false
+  xy: 0, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+playerBackWalk0
+  rotate: false
+  xy: 256, 0
+  size: 63, 64
+  orig: 63, 64
+  offset: 0, 0
+  index: -1
+playerBackWalk1
+  rotate: false
+  xy: 319, 0
+  size: 63, 64
+  orig: 63, 64
+  offset: 0, 0
+  index: -1
+playerFrontIdel
+  rotate: false
+  xy: 64, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+playerFrontWalk0
+  rotate: false
+  xy: 128, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+playerFrontWalk1
+  rotate: false
+  xy: 192, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+playerLeftWalk0
+  rotate: false
+  xy: 382, 0
+  size: 47, 64
+  orig: 47, 64
+  offset: 0, 0
+  index: -1
+playerLeftWalk1
+  rotate: false
+  xy: 429, 0
+  size: 47, 64
+  orig: 47, 64
+  offset: 0, 0
+  index: -1
+playerLeftWalk2
+  rotate: false
+  xy: 570, 2
+  size: 41, 62
+  orig: 41, 62
+  offset: 0, 0
+  index: -1
+playerRightWalk0
+  rotate: false
+  xy: 476, 0
+  size: 47, 64
+  orig: 47, 64
+  offset: 0, 0
+  index: -1
+playerRightWalk1
+  rotate: false
+  xy: 523, 0
+  size: 47, 64
+  orig: 47, 64
+  offset: 0, 0
+  index: -1
+playerRightWalk2
+  rotate: false
+  xy: 611, 2
+  size: 41, 62
+  orig: 41, 62
+  offset: 0, 0
+  index: -1

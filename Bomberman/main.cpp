@@ -6,7 +6,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(900, 600), "gppcc9-Game");
 	window.setFramerateLimit(60);
 
-	Game game(&window, "");
+	Game game(&window, "testLevel.tmx");
 
 	return 0;
 }

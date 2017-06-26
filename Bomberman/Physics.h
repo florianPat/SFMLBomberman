@@ -43,7 +43,6 @@ public:
 
 		bool isStatic;
 		bool isTrigger;
-		bool isGrounded = false;
 		bool triggered = false;
 		TriggerInformation triggerInformation = {};
 		sf::Vector2f pos;
@@ -59,7 +58,6 @@ public:
 		Body(sf::Vector2f& pos, std::string name, sf::FloatRect* collider, bool isTrigger = false, bool isStatic = false, std::vector<std::string> collisionId = {});
 		//Should be called if the object, is a static one
 		Body(std::string name, sf::FloatRect collider, bool isTrigger = false, bool isStatic = true, std::vector<std::string> collisionId = {});
-		bool getIsGrounded();
 		bool getIsTriggerd();
 		sf::Vector2f& getPos();
 		void setPos(sf::Vector2f newPos);
@@ -72,10 +70,11 @@ private:
 private:
 	void handleCollision(std::_List_iterator<std::_List_val<std::_List_simple_types<std::pair<const std::string, std::shared_ptr<Body>>>>>& it,
 		std::_List_iterator<std::_List_val<std::_List_simple_types<std::pair<const std::string, std::shared_ptr<Body>>>>>& collideElement,
-		const sf::FloatRect& bodyRect, const sf::FloatRect& elementRect);
+		sf::FloatRect& bodyRect, const sf::FloatRect& elementRect);
 public:
 	Physics();
 	void update(float dt);
+	void debugRenderBodies(sf::RenderWindow& window);
 	void addElementPointer(std::shared_ptr<Body> body);
 	void addElementValue(Body body);
 	bool removeElementById(std::string& id);

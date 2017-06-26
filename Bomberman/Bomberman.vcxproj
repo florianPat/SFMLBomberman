@@ -122,6 +122,7 @@
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="TextureAtlas.h" />
     <ClInclude Include="TiledMap.h" />
     <ClInclude Include="Utils.h" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="PlayerComponent.cpp" />
     <ClCompile Include="TextureAtlas.cpp" />
     <ClCompile Include="TiledMap.cpp" />
     <ClCompile Include="Utils.cpp" />

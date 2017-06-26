@@ -7,6 +7,7 @@
 #include <iostream>
 #include "GameObjectManager.h"
 #include "EventManager.h"
+#include "PlayerComponent.h"
 
 class Level
 {
@@ -22,9 +23,13 @@ private:
 
 	std::string newLevel = "";
 	bool endLevel = false;
+
+	static constexpr int ACTOR_PLAYER = 0xa2ecb56a;
 private:
 	virtual void updateModel();
 	virtual void composeFrame();
+private:
+	void createPlayer(sf::Vector2f& playerPos);
 public:
 	Level(sf::RenderWindow* window, std::string tiledMapName);
 	std::string Go();

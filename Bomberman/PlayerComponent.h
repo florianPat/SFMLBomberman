@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <vector>
 #include "Utils.h"
+#include "Actor.h"
+#include "BombComponent.h"
 
 class PlayerComponent : public Component
 {
@@ -17,10 +19,12 @@ class PlayerComponent : public Component
 	TextureAtlas atlas;
 	std::map<std::string, Animation> animations;
 	sf::Sprite currentFrame;
+	std::vector<std::string> collisionIds;
 	sf::Vector2f startingPos;
 	sf::FloatRect boundingBox;
 	std::shared_ptr<Physics::Body> body;
 	sf::View view;
+	bool isInsideBomb = false;
 public:
 	static constexpr int COMPONENT_PLAYER_ID = 0xe9479fee;
 public:

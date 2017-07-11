@@ -83,7 +83,7 @@ void Physics::update(float dt)
 				it->second->updateHead();
 			}
 
-			for (auto collisionIdIt = it->second->physicsElement.collisionIds.begin(); collisionIdIt != it->second->physicsElement.collisionIds.end(); ++collisionIdIt)
+			for (auto collisionIdIt = it->second->physicsElement.collisionIds->begin(); collisionIdIt != it->second->physicsElement.collisionIds->end(); ++collisionIdIt)
 			{
 				auto collideElement = bodies.find(*collisionIdIt);
 				if (collideElement != bodies.end())
@@ -209,11 +209,22 @@ void Physics::Body::updateHead()
 	}
 }
 
-Physics::Body::Body(sf::Vector2f& pos, std::string name, sf::FloatRect* collider, bool isTrigger, bool isStatic, std::vector<std::string> collisionId)
+Physics::Body::Body(sf::Vector2f& pos, std::string name, sf::FloatRect* collider, std::vector<std::string>* collisionId, bool isTrigger, bool isStatic)
 	: isStatic(isStatic), isTrigger(isTrigger), pos(pos), physicsElement{}
 {
 	this->physicsElement.id = name;
+	this->physicsElement.collisionIdPointer = nullptr;
 	this->physicsElement.collisionIds = collisionId;
+	this->physicsElement.collidersInPointer = true;
+	this->physicsElement.colliders.collidersPointer = collider;
+}
+
+Physics::Body::Body(sf::Vector2f & pos, std::string name, sf::FloatRect * collider, bool isTrigger, bool isStatic, std::vector<std::string> collisionId)
+	: isStatic(isStatic), isTrigger(isTrigger), pos(pos), physicsElement{}
+{
+	this->physicsElement.id = name;
+	this->physicsElement.collisionIdPointer = std::make_shared<std::vector<std::string>>(collisionId);
+	this->physicsElement.collisionIds = std::move(physicsElement.collisionIdPointer).get();
 	this->physicsElement.collidersInPointer = true;
 	this->physicsElement.colliders.collidersPointer = collider;
 }
@@ -222,7 +233,8 @@ Physics::Body::Body(std::string name, sf::FloatRect collider, bool isTrigger, bo
 	: isStatic(isStatic), isTrigger(isTrigger), pos(0.0f, 0.0f), physicsElement{}
 {
 	this->physicsElement.id = name;
-	this->physicsElement.collisionIds = collisionId;
+	this->physicsElement.collisionIdPointer = std::make_shared<std::vector<std::string>>(collisionId);
+	this->physicsElement.collisionIds = std::move(physicsElement.collisionIdPointer).get();
 	this->physicsElement.collidersInPointer = false;
 	this->physicsElement.colliders.collidersValue = collider;
 }

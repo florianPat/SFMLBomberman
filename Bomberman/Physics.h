@@ -10,7 +10,8 @@ class Physics
 	struct PhysicElement
 	{
 		std::string id;
-		std::vector<std::string> collisionIds;
+		std::shared_ptr<std::vector<std::string>> collisionIdPointer;
+		std::vector<std::string>* collisionIds;
 		bool collidersInPointer;
 		sf::FloatRect shoes;
 		sf::FloatRect head;
@@ -55,6 +56,7 @@ public:
 		void updateHead();
 	public:
 		//Should be called, if the object is moving
+		Body(sf::Vector2f& pos, std::string name, sf::FloatRect* collider, std::vector<std::string>* collisionId, bool isTrigger = false, bool isStatic = false);
 		Body(sf::Vector2f& pos, std::string name, sf::FloatRect* collider, bool isTrigger = false, bool isStatic = false, std::vector<std::string> collisionId = {});
 		//Should be called if the object, is a static one
 		Body(std::string name, sf::FloatRect collider, bool isTrigger = false, bool isStatic = true, std::vector<std::string> collisionId = {});

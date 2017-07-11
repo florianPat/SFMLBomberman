@@ -2,7 +2,8 @@
 
 PlayerComponent::PlayerComponent(sf::Vector2f & playerPos, TextureAtlas & atlas, Physics & physics, sf::RenderWindow & renderTarget, EventManager * eventManager, Actor * owner) : renderTarget(renderTarget),
 	physics(physics), atlas(atlas), startingPos(startingPos), boundingBox(), view(renderTarget.getDefaultView()),
-	body(std::make_shared<Physics::Body>(playerPos, "player", &boundingBox, false, false, std::vector<std::string>{"Blocked0", "Blocked1", "Blocked2", "Blocked3", "Blocked4", "Blocked5", "Blocked6", "Blocked7", "Blocked8", "Blocked9", "Blocked10", "Blocked11", "Blocked12", "Blocked13"})),
+	collisionIds{ "Blocked0", "Blocked1", "Blocked2", "Blocked3", "Blocked4", "Blocked5", "Blocked6", "Blocked7", "Blocked8", "Blocked9", "Blocked10", "Blocked11", "Blocked12", "Blocked13", "bomb" },
+	body(std::make_shared<Physics::Body>(playerPos, "player", &boundingBox, &collisionIds)),
 	Component(COMPONENT_PLAYER_ID, eventManager, owner)
 {
 	physics.addElementPointer(body);
@@ -29,6 +30,29 @@ void PlayerComponent::update(float dt)
 		body->vel.x = -speed;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
 		body->vel.x = speed;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && owner->getComponent<BombComponent>(BombComponent::COMPONENT_BOMB_ID) == nullptr)
+	{
+		owner->addComponent(std::make_shared<BombComponent>(sf::Vector2f{ body->getPos().x + currentFrame.getTextureRect().width / 2.0f, body->getPos().y + currentFrame.getTextureRect().height / 2.0f }, TextureAtlas("bomb.atlas"), physics, renderTarget, eventManager, owner));
+		//NOTE: "bomb" also has to be the last one in collisionIds, so that this works!
+		collisionIds.pop_back();
+		isInsideBomb = true;
+	}
+
+	auto bombComponent = owner->getComponent<BombComponent>(BombComponent::COMPONENT_BOMB_ID);
+	if (bombComponent)
+	{
+		if (isInsideBomb)
+		{
+			if (!boundingBox.intersects(bombComponent->getBoundingBox()))
+			{
+				collisionIds.push_back("bomb");
+				isInsideBomb = false;
+			}
+		}
+
+		if (bombComponent->getIsExploded())
+			owner->removeComponent(bombComponent->COMPONENT_BOMB_ID);
+	}
 
 	if (body->vel.x > 0)
 		currentFrame = animations.find("rightWalk")->second.getKeyFrame();

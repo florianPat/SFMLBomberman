@@ -26,6 +26,12 @@ private:
 
 	static constexpr int ACTOR_PLAYER = 0xa2ecb56a;
 private:
+	std::function<void(std::unique_ptr<EventData>)> eventLevelReloadFunction = std::bind(&Level::eventLevelReloadHandler, this, std::placeholders::_1);
+	static constexpr int delegateLevelReloadId = 0;
+	DelegateFunction delegateLevelReload = std::make_pair(delegateLevelReloadId, eventLevelReloadFunction);
+private:
+	void eventLevelReloadHandler(std::unique_ptr<EventData>);
+private:
 	virtual void updateModel();
 	virtual void composeFrame();
 private:

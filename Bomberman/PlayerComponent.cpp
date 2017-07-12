@@ -1,4 +1,12 @@
 #include "PlayerComponent.h"
+#include "EventHitByBomb.h"
+#include "EventLevelReload.h"
+
+void PlayerComponent::eventEntitiyHitByBombHandler(std::unique_ptr<EventData> eventData)
+{
+	std::unique_ptr<EventLevelReload> eventLevelReloadData = std::make_unique<EventLevelReload>();
+	eventManager->TriggerEvent(std::move(eventLevelReloadData));
+}
 
 PlayerComponent::PlayerComponent(sf::Vector2f & playerPos, TextureAtlas & atlas, Physics & physics, sf::RenderWindow & renderTarget, EventManager * eventManager, Actor * owner) : renderTarget(renderTarget),
 	physics(physics), atlas(atlas), startingPos(startingPos), boundingBox(), view(renderTarget.getDefaultView()),
@@ -16,6 +24,8 @@ PlayerComponent::PlayerComponent(sf::Vector2f & playerPos, TextureAtlas & atlas,
 	utils::addAnimation({ "playerLeftWalk1", "playerLeftWalk2" }, "leftWalk", atlas, animations);
 	utils::addAnimation({ "playerRightWalk0" }, "rightPreWalk", atlas, animations);
 	utils::addAnimation({ "playerRightWalk1", "playerRightWalk2" }, "rightWalk", atlas, animations);
+
+	eventManager->addListener(EventHitByBomb::EVENT_HITBYBOMB_ID, delegateCollectedAllDiamonds);
 }
 
 void PlayerComponent::update(float dt)

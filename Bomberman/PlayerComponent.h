@@ -25,6 +25,12 @@ class PlayerComponent : public Component
 	std::shared_ptr<Physics::Body> body;
 	sf::View view;
 	bool isInsideBomb = false;
+private:
+	void eventEntitiyHitByBombHandler(std::unique_ptr<EventData> eventData);
+private:
+	std::function<void(std::unique_ptr<EventData>)> eventEntitiyHitByBombFunction = std::bind(&PlayerComponent::eventEntitiyHitByBombHandler, this, std::placeholders::_1);
+	static constexpr int delegateEntitiyHitByBombId = 0xa1455aa0;
+	DelegateFunction delegateCollectedAllDiamonds = std::make_pair(delegateEntitiyHitByBombId, eventEntitiyHitByBombFunction);
 public:
 	static constexpr int COMPONENT_PLAYER_ID = 0xe9479fee;
 public:

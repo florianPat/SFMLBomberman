@@ -1,4 +1,11 @@
 #include "Level.h"
+#include "EventLevelReload.h"
+
+void Level::eventLevelReloadHandler(std::unique_ptr<EventData>)
+{
+	newLevel = levelName;
+	endLevel = true;
+}
 
 void Level::updateModel()
 {
@@ -41,6 +48,8 @@ map(tiledMapName), clock(), gom(), eventManager()
 		else if (it->name == "playerStart")
 			createPlayer(sf::Vector2f{ it->objects[0].left, it->objects[0].top });
 	}
+
+	eventManager.addListener(EventLevelReload::EVENT_LEVEL_RELOAD_ID, delegateLevelReload);
 }
 
 std::string Level::Go()

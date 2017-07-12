@@ -10,7 +10,7 @@ class Physics
 	struct PhysicElement
 	{
 		std::string id;
-		std::shared_ptr<std::vector<std::string>> collisionIdPointer;
+		std::shared_ptr<std::vector<std::string>> collisionIdPointer; //NOTE: Used shared-ptr here, because this should be copyable...
 		std::vector<std::string>* collisionIds;
 		bool collidersInPointer;
 		sf::FloatRect shoes;

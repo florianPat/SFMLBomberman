@@ -32,7 +32,7 @@ void PlayerComponent::update(float dt)
 		body->vel.x = speed;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && owner->getComponent<BombComponent>(BombComponent::COMPONENT_BOMB_ID) == nullptr)
 	{
-		owner->addComponent(std::make_shared<BombComponent>(sf::Vector2f{ body->getPos().x + currentFrame.getTextureRect().width / 2.0f, body->getPos().y + currentFrame.getTextureRect().height / 2.0f }, TextureAtlas("bomb.atlas"), physics, renderTarget, eventManager, owner));
+		owner->addComponent(std::make_shared<BombComponent>(sf::Vector2f{ body->getPos().x + currentFrame.getTextureRect().width / 2.0f, body->getPos().y + currentFrame.getTextureRect().height / 2.0f }, 3, TextureAtlas("bomb.atlas"), physics, renderTarget, eventManager, owner));
 		//NOTE: "bomb" also has to be the last one in collisionIds, so that this works!
 		collisionIds.pop_back();
 		isInsideBomb = true;

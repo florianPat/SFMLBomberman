@@ -118,6 +118,7 @@
     <ClInclude Include="BombComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="EventData.h" />
+    <ClInclude Include="EventHitByBomb.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObjectManager.h" />

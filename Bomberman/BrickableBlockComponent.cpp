@@ -11,6 +11,9 @@ void BrickableBlockComponent::eventEntitiyHitByBombHandler(EventData* eventData)
 		{
 			int size = destroyBoundingBoxesAnimations.size();
 			destroyBoundingBoxesAnimations.push_back(std::make_pair(*boundingIt, Animation(TextureAtlas("DestroyBrickableBlock.atlas").getRegions(), sf::seconds(0.5f).asMicroseconds(), Animation::PlayMode::NORMAL)));
+			//TODO: Can we handle that better (iterator fucks itself up, if a new Animation gets spawned)
+			for (auto it = destroyBoundingBoxesAnimations.begin(); it != destroyBoundingBoxesAnimations.end(); ++it)
+				it->second.restart();
 
 			auto copyBoundingIt = boundingIt++;
 			auto copyIt = it++;

@@ -15,8 +15,8 @@ public:
 	};
 private:
 	std::vector<sf::Sprite> keyFrames;
-	std::vector<sf::Sprite>::iterator keyFrameIt;
-	std::vector<sf::Sprite>::reverse_iterator keyFrameItReverse;
+	std::_Vector_iterator<std::_Vector_val<std::_Simple_types<sf::Sprite>>> keyFrameIt;
+	std::reverse_iterator<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<sf::Sprite>>>> keyFrameItReverse;
 	sf::Int64 currentTime = 0;
 	sf::Int64 frameDuration;
 	PlayMode playMode;

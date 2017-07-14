@@ -1,7 +1,7 @@
 #include "Level.h"
 #include "EventLevelReload.h"
 
-void Level::eventLevelReloadHandler(std::unique_ptr<EventData>)
+void Level::eventLevelReloadHandler(EventData* eventData)
 {
 	newLevel = levelName;
 	endLevel = true;
@@ -34,6 +34,12 @@ void Level::createPlayer(sf::Vector2f & playerPos)
 	playerP->addComponent(std::make_shared<PlayerComponent>(playerPos, TextureAtlas("player.atlas"), physics, *window, &eventManager, playerP));
 }
 
+void Level::createBrickableBlocks(std::vector<sf::FloatRect>& boundingBoxes)
+{
+	Actor* brickableBlocksP = gom.addActor(ACTOR_BRICKABLEBLOCK);
+	brickableBlocksP->addComponent(std::make_shared<BrickableBlockComponent>(std::string{ "assetsRaw/brickableBrick.png" }, boundingBoxes, physics, *window, &eventManager, brickableBlocksP));
+}
+
 Level::Level(sf::RenderWindow * window, std::string tiledMapName) : window(window), physics(), levelName(tiledMapName),
 map(tiledMapName), clock(), gom(), eventManager()
 {
@@ -47,6 +53,8 @@ map(tiledMapName), clock(), gom(), eventManager()
 		}
 		else if (it->name == "playerStart")
 			createPlayer(sf::Vector2f{ it->objects[0].left, it->objects[0].top });
+		else if (it->name == "brickabel")
+			createBrickableBlocks(it->objects);
 	}
 
 	eventManager.addListener(EventLevelReload::EVENT_LEVEL_RELOAD_ID, delegateLevelReload);

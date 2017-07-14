@@ -116,6 +116,7 @@
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Assets.h" />
     <ClInclude Include="BombComponent.h" />
+    <ClInclude Include="BrickableBlockComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="EventData.h" />
     <ClInclude Include="EventHitByBomb.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="AssetManager.cpp" />
     <ClCompile Include="Assets.cpp" />
     <ClCompile Include="BombComponent.cpp" />
+    <ClCompile Include="BrickableBlockComponent.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />

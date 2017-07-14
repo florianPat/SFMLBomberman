@@ -77,7 +77,9 @@ public:
 	Physics();
 	void update(float dt);
 	void debugRenderBodies(sf::RenderWindow& window);
+	//Use if you need a reference to the body, to get back triggerInformation etc.
 	void addElementPointer(std::shared_ptr<Body> body);
+	//Use this otherwise
 	void addElementValue(Body body);
 	bool removeElementById(std::string& id);
 };

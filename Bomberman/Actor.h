@@ -27,7 +27,7 @@ inline T* Actor::getComponent(int componentId)
 	auto result = components.find(componentId);
 	if (result != components.end() && typeid(*result->second) == typeid(T))
 	{
-		return dynamic_cast<T*>(result->second.get()); //TODO: Do I really want to return a raw pointer?
+		return dynamic_cast<T*>(result->second.get());
 	}
 	else
 		return nullptr;

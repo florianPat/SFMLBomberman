@@ -2,15 +2,18 @@
 #include "EventHitByBomb.h"
 #include "EventLevelReload.h"
 
-void PlayerComponent::eventEntitiyHitByBombHandler(std::unique_ptr<EventData> eventData)
+void PlayerComponent::eventEntitiyHitByBombHandler(EventData* eventData)
 {
-	std::unique_ptr<EventLevelReload> eventLevelReloadData = std::make_unique<EventLevelReload>();
-	eventManager->TriggerEvent(std::move(eventLevelReloadData));
+	if (body->getId() == static_cast<EventHitByBomb*>(eventData)->collisionId)
+	{
+		std::unique_ptr<EventLevelReload> eventLevelReloadData = std::make_unique<EventLevelReload>();
+		eventManager->TriggerEvent(std::move(eventLevelReloadData));
+	}
 }
 
 PlayerComponent::PlayerComponent(sf::Vector2f & playerPos, TextureAtlas & atlas, Physics & physics, sf::RenderWindow & renderTarget, EventManager * eventManager, Actor * owner) : renderTarget(renderTarget),
 	physics(physics), atlas(atlas), startingPos(startingPos), boundingBox(), view(renderTarget.getDefaultView()),
-	collisionIds{ "Blocked0", "Blocked1", "Blocked2", "Blocked3", "Blocked4", "Blocked5", "Blocked6", "Blocked7", "Blocked8", "Blocked9", "Blocked10", "Blocked11", "Blocked12", "Blocked13", "bomb" },
+	collisionIds{ "Blocked0", "Blocked1", "Blocked2", "Blocked3", "Blocked4", "Blocked5", "Blocked6", "Blocked7", "Blocked8", "Blocked9", "Blocked10", "Blocked11", "Blocked12", "Blocked13", "Brickable0", "Brickable1", "Brickable2", "Brickable3", "bomb" },
 	body(std::make_shared<Physics::Body>(playerPos, "player", &boundingBox, &collisionIds)),
 	Component(COMPONENT_PLAYER_ID, eventManager, owner)
 {

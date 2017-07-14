@@ -56,7 +56,7 @@ bool EventManager::TriggerEvent(std::unique_ptr<EventData> eventData)
 	{
 		for (auto it = findIt->second.begin(); it != findIt->second.end(); ++it)
 		{
-			it->second(std::move(eventData));
+			it->second(eventData.get());
 			processed = true;
 		}
 	}

@@ -140,9 +140,11 @@ std::unique_ptr<TextureRegion> TextureAtlas::findRegion(const std::string& name)
 std::vector<TextureRegion> TextureAtlas::getRegions()
 {
 	auto result = std::vector<TextureRegion>();
-	for (auto it = textureAtlas.begin(); it != textureAtlas.end(); ++it)
+	int i = 0;
+	for (auto it = textureAtlas.begin(); it != textureAtlas.end(); ++it, ++i)
 	{
 		result.push_back(it->second);
+		result[i].initSprite(); //TODO: Better done in copy constructor??
 	}
 	return result;
 }

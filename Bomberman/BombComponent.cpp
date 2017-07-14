@@ -7,7 +7,7 @@ boundingBoxTriggerArea(this->pos.x - 64.0f * std::floorf(flameRange / 2.0f), thi
 body("bomb", boundingBox), flameTileTexture(Assets::textureAssetManager.getOrAddRes("assetsRaw/bomb/flameTile.png")), flameTileSprite(*flameTileTexture),
 flameTileRenderTexture(), flameSprite(),
 move(std::roundf(boundingBoxTriggerArea.width / 64.0f / 2.0f) * 64.0f, -std::floorf(boundingBoxTriggerArea.width / 64.0f / 2.0f) * 64.0f),
-triggerExplosionBody(std::make_shared<Physics::Body>(sf::Vector2f{ boundingBoxTriggerArea.left, boundingBoxTriggerArea.top }, "bombTrigger", &boundingBoxTriggerArea, true, true, std::vector<std::string>{"player"})), //TODO: Add brickable-Blocks, Enemies, ...
+triggerExplosionBody(std::make_shared<Physics::Body>(sf::Vector2f{ boundingBoxTriggerArea.left, boundingBoxTriggerArea.top }, "bombTrigger", &boundingBoxTriggerArea, true, true, std::vector<std::string>{"player", "Brickable0", "Brickable1", "Brickable2", "Brickable3"})), //TODO: Enemies, ...
 Component(COMPONENT_BOMB_ID, eventManager, owner)
 {
 	flameTileRenderTexture.create((unsigned int)boundingBoxTriggerArea.width, (unsigned int)boundingBoxTriggerArea.height);
@@ -24,7 +24,7 @@ Component(COMPONENT_BOMB_ID, eventManager, owner)
 	utils::addAnimation({ "bombExplode1", "bombExplode2" }, "bombExplode", atlas, animations);
 
 	physics.addElementValue(body);
-	physics.addElementPointer(triggerExplosionBody);
+	physics.addElementPointer(triggerExplosionBody); //TODO: Fix triggerExplosionBody rect
 }
 
 void BombComponent::update(float dt)
@@ -49,7 +49,7 @@ void BombComponent::update(float dt)
 		{
 			if (triggerExplosionBody->getIsTriggerd())
 			{
-				std::unique_ptr<EventHitByBomb> eventData = std::make_unique<EventHitByBomb>();
+				std::unique_ptr<EventHitByBomb> eventData = std::make_unique<EventHitByBomb>(triggerExplosionBody->getTriggerInformation().triggerElementCollision);
 				eventManager->TriggerEvent(std::move(eventData));
 			}
 

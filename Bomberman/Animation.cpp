@@ -46,7 +46,7 @@ bool Animation::isAnimationFinished()
 	{
 		assert(playMode == Animation::PlayMode::NORMAL || playMode == Animation::PlayMode::REVERSED);
 
-		sf::Int64 currentTime = clock.restart().asMicroseconds();
+		currentTime += clock.restart().asMicroseconds();
 
 		if (playMode == Animation::PlayMode::NORMAL)
 		{
@@ -55,7 +55,7 @@ bool Animation::isAnimationFinished()
 				currentTime -= frameDuration;
 				if (++keyFrameIt == keyFrames.end())
 				{
-					--keyFrameIt;
+					keyFrameIt = --keyFrames.end();
 					return true;
 				}
 			}
@@ -76,6 +76,8 @@ bool Animation::isAnimationFinished()
 
 			return false;
 		}
+		else
+			return false; //TODO: Exeption?!
 	}
 	else
 	{
@@ -99,6 +101,8 @@ bool Animation::isAnimationFinished()
 			else
 				return false;
 		}
+		else
+			return false; //TODO: Exeption?!
 	}
 }
 
@@ -115,8 +119,7 @@ sf::Sprite Animation::getKeyFrame()
 				currentTime -= frameDuration;
 				if (++keyFrameIt == keyFrames.end())
 				{
-					--keyFrameIt;
-					break;
+					keyFrameIt = --keyFrames.end();
 				}
 			}
 
@@ -158,14 +161,18 @@ sf::Sprite Animation::getKeyFrame()
 
 			return *keyFrameItReverse;
 		}
+		else
+		{
+			if (playMode == Animation::PlayMode::NORMAL || playMode == Animation::PlayMode::LOOPED)
+				return *keyFrameIt;
+			else if (playMode == Animation::PlayMode::REVERSED || playMode == Animation::PlayMode::LOOP_REVERSED)
+				return *keyFrameItReverse;
+			else
+				return keyFrames[0];
+		}
 	}
 	else
-	{
-		if (playMode == Animation::PlayMode::NORMAL || playMode == Animation::PlayMode::LOOPED)
-			return *keyFrameIt;
-		else if (playMode == Animation::PlayMode::REVERSED || playMode == Animation::PlayMode::LOOP_REVERSED)
-			return *keyFrameItReverse;
-	}
+		return keyFrames[0]; //TODO: Handle this better!
 }
 
 void Animation::setPlayMode(PlayMode & newPlayMode)

@@ -6,7 +6,7 @@
 #include <functional>
 #include <memory>
 
-typedef std::pair<int, std::function<void(std::unique_ptr<EventData>)>> DelegateFunction;
+typedef std::pair<int, std::function<void(EventData*)>> DelegateFunction;
 
 class EventManager
 {
